@@ -7,11 +7,11 @@ br.open("http://www.youtube.com")
 print "We begin at %s" %br.geturl()
 
 # Find link for "Search", this is probably wrong...
-try:
-    mech.follow_link(text_regex=re.compile("Search"))
-except:
-    #print "No link found for search"
-    pass
+#try:
+#    mech.follow_link(text_regex=re.compile("Search"))
+#except:
+#    print "No link found for search"
+#    pass
 
 print "What do you want to search for?"
 user_in = raw_input()
@@ -45,9 +45,7 @@ br.open(search_res.geturl())
 
 print "We are now at %s" %br.geturl()
 for l in br.links(url_regex='/watch?'):
-    print l
+    br.follow_link(l)
+    break
 
-#print search_res.read() # body
-
-#link1 = br.follow_link(text_regex=r"More information")
-#print "We follow a link to %s" %link1.geturl()
+print "First result of search: %s" %br.geturl()
