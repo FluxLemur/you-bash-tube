@@ -2,4 +2,4 @@
 Brings wonderous Youtube to your command line. Written using python and Mechanize.
 (http://wwwsearch.sourceforge.net/mechanize/)
 
-Run ./src/download.sh to download the first search result from input.
+Run `./download.sh` from `./src/` to download the first search result from input.
