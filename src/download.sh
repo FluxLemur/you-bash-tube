@@ -5,4 +5,4 @@ if [ $# -lt 1 ]; then
     exit 1;
 fi
 
-python simple_search.py $1
+python simple_search.py "$1"
