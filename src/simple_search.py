@@ -1,17 +1,16 @@
 import sys
 import os
-import re
 import mechanize
-
-br = mechanize.Browser()
-br.set_handle_robots(False)
-br.open("http://www.youtube.com")
 
 if len(sys.argv) < 2:
     print "Usage:\tpython %s <search query>" % sys.argv[0]
     sys.exit()
 
 user_in = sys.argv[1]
+
+br = mechanize.Browser()
+br.set_handle_robots(False)
+br.open("http://www.youtube.com")
 
 # See http://wwwsearch.sourceforge.net/mechanize/forms.html on forms
 search_form = None
@@ -36,8 +35,13 @@ for l in br.links(url_regex='/watch?'):
     br.follow_link(l)
     break
 
+def get_filename(query):
+    query = query.replace(" ", "_")
+    query = query.replace("\"", "\\\"")
+    return query
+
 print "Downloading %s..." % br.title()
-os.system("youtube-dl -xq -o '%s.%%(ext)s' %s" %
-          (user_in.replace(" ","_"), br.geturl()))
+os.system("youtube-dl -xq -o \"%s.%%(ext)s\" %s" %
+          (get_filename(user_in), br.geturl()))
 
 print "Download complete."
