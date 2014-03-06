@@ -1,3 +1,5 @@
+import sys
+import os
 import re
 import mechanize
 
@@ -5,7 +7,11 @@ br = mechanize.Browser()
 br.set_handle_robots(False)
 br.open("http://www.youtube.com")
 
-user_in = raw_input()
+if len(sys.argv) < 2:
+    print "Usage:\tpython %s <search query>" % sys.argv[0]
+    sys.exit()
+
+user_in = sys.argv[1]
 
 # See http://wwwsearch.sourceforge.net/mechanize/forms.html on forms
 search_form = None
@@ -15,7 +21,7 @@ for form in br.forms():
         search_form = form
         break
 
-if search_form == None:
+if search_form is None:
     quit()
 
 search_req = search_form.click()
@@ -30,4 +36,8 @@ for l in br.links(url_regex='/watch?'):
     br.follow_link(l)
     break
 
-print br.geturl()
+print "Downloading %s..." % br.title()
+os.system("youtube-dl -xq -o '%s.%%(ext)s' %s" %
+          (user_in.replace(" ","_"), br.geturl()))
+
+print "Download complete."

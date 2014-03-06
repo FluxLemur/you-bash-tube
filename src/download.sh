@@ -1,6 +1,8 @@
-#! /bin/bash
+#!/bin/bash
 
-echo "Please enter title: "
-a=`python simple_search.py`
-echo "Beginning download..."
-youtube-dl -xtq $a
+if [ $# -lt 1 ]; then
+    echo "Need a song title"
+    exit 1;
+fi
+
+python simple_search.py $1
